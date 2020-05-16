@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux'
+// import { combineReducers } from 'redux'
 
 const t = {
   ADD_TODO: 'ADD_TODO',
@@ -53,6 +53,14 @@ const visibilityFilter = (state = t.SHOW_ALL, action) => {
     default:
       return state
   }
+}
+
+const combineReducers = (reducers) => {
+  return (state = {}, action) => Object.keys(reducers)
+    .reduce((acc, current) => ({
+      ...acc,
+      [current]: reducers[current](state[current], action),
+    }), {})
 }
 
 export const todoApp = combineReducers({
