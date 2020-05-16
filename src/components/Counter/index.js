@@ -1,12 +1,12 @@
 import React from 'react'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 // import classNames from 'classnames'
 
-import { 
+import {
   incrementCounter,
   decrementCounter,
   resetCounter,
- } from 'store/reducers/counter'
+} from 'store/reducers/counter'
 
 // import s from './Counter.module.scss'
 
@@ -27,7 +27,7 @@ const Counter = ({
 }
 
 const mapStateToProps = state => ({
-  count: state,
+  count: state.counter,
 })
 
 const mapDispatchToProps = {
