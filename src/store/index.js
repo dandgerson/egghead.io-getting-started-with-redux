@@ -5,14 +5,14 @@ import {
 
 import {
   counter,
-  todos,
+  todoApp,
 } from './reducers'
 
 // const unsubsribeListener = (listener) => listener()
 
 const store = createStore(combineReducers({
   counter,
-  todos,
+  todoApp,
 }))
 
 const listener = () => console.log('The store has updated', store.getState())
