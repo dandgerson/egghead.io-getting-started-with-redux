@@ -31,6 +31,10 @@ const TodoApp = ({
     inputEl.value = ''
   }
 
+  const handleToggleTodo = (id) => {
+    toggleTodo({ id })
+  }
+
   return (
     <div>
       <div>
@@ -41,16 +45,31 @@ const TodoApp = ({
       </div>
 
       {todos.map(todo => (
-        <div key={todo.id}>
-          <div>
+        <ul
+          key={todo.id}
+          style={{
+            display: 'flex',
+            justifyContent: 'flex-start',
+            listStyleType: 'circle',
+            marginLeft: '40%',
+          }}
+        >
+          <li
+            style={{
+              width: '200px',
+              textAlign: 'left',
+              // display: 'flex',
+              // justifyContent: 'flex-start',
+              cursor: 'pointer',
+              // margin: '4px auto',
+            }}
+            onClick={() => handleToggleTodo(todo.id)}
+          >
             <span className={classNames({
               [s.completed]: todo.completed,
             })}>{todo.text}</span>
-            <button onClick={() => toggleTodo({
-              id: todo.id,
-            })}>done</button>
-          </div>
-        </div>
+          </li>
+        </ul>
       ))}
     </div>
   )
