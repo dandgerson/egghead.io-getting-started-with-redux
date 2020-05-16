@@ -21,7 +21,7 @@ const todo = (state, action) => {
         ? state
         : ({
           ...state,
-          comleted: !state.completed,
+          completed: !state.completed,
         })
     }
     default:
