@@ -3,7 +3,6 @@
 const t = {
   ADD_TODO: 'ADD_TODO',
   TOGGLE_TODO: 'TOGGLE_TODO',
-  SHOW_ALL: 'SHOW_ALL',
   SET_VISIBILITY_FILTER: 'SET_VISIBILITY_FILTER'
 }
 
@@ -45,7 +44,7 @@ const todos = (state = [], action) => {
   }
 }
 
-const visibilityFilter = (state = t.SHOW_ALL, action) => {
+const visibilityFilter = (state = 'SHOW_ALL', action) => {
   switch (action.type) {
     case t.SET_VISIBILITY_FILTER: {
       return action.filter

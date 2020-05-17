@@ -5,22 +5,24 @@ import classNames from 'classnames'
 import {
   addTodo,
   toggleTodo,
-  setVisibilityFilter,
 } from 'store/reducers/todoApp'
 
 import s from './TodoApp.module.scss'
 
+import FilterLink from './FilterLink'
+
 let nextTodoId = 0
 const TodoApp = ({
   todos,
-  filters,
+  filter,
   addTodo,
   toggleTodo,
-  setVisibilityFilter,
 }) => {
   const refs = {
     input: useRef(),
   }
+
+  // console.log({ filter })
 
   const handleAddTodo = () => {
     const inputEl = refs.input.current
@@ -35,26 +37,37 @@ const TodoApp = ({
     toggleTodo({ id })
   }
 
+  const getVisibleTodos = (todos, filter) => {
+    switch (filter) {
+      case 'SHOW_ALL': {
+        return todos
+      }
+      case 'SHOW_COMPLETED': {
+        return todos.filter(todo => todo.completed)
+      }
+      default: {
+        return todos.filter(todo => !todo.completed)
+      }
+    }
+  }
+
   return (
     <div>
       <div>
         <input ref={refs.input} type="text" placeholder='input todo' />
-        <button onClick={handleAddTodo}>
-          Add Todo
-      </button>
+        <input type="button" value='Add Todo' onClick={handleAddTodo} />
+
       </div>
 
-      {todos.map(todo => (
-        <ul
-          key={todo.id}
-          style={{
-            display: 'flex',
-            justifyContent: 'flex-start',
-            listStyleType: 'circle',
-            marginLeft: '40%',
-          }}
-        >
+      <ul
+        style={{
+          listStyleType: 'circle',
+          marginLeft: '40%',
+        }}
+      >
+        {getVisibleTodos(todos, filter).map(todo => (
           <li
+            key={todo.id}
             style={{
               width: '200px',
               textAlign: 'left',
@@ -67,23 +80,50 @@ const TodoApp = ({
           >
             <span className={classNames({
               [s.completed]: todo.completed,
-            })}>{todo.text}</span>
+            })}>
+              {todo.text}
+            </span>
           </li>
-        </ul>
-      ))}
+        ))
+        }
+      </ul>
+      <p>
+        Show:
+            {' '}
+        <FilterLink
+          filter='SHOW_ALL'
+          currentFilter={filter}
+        >
+          All
+            </FilterLink>
+        {' '}
+        <FilterLink
+          filter='SHOW_ACTIVE'
+          currentFilter={filter}
+        >
+          Active
+            </FilterLink>
+        {' '}
+        <FilterLink
+          filter='SHOW_COMPLETED'
+          currentFilter={filter}
+        >
+          Completed
+            </FilterLink>
+      </p>
+
     </div>
   )
 }
 
 const mapStateToProps = (state) => ({
   todos: state.todoApp.todos,
-  filters: state.todoApp.visibilityFilter,
+  filter: state.todoApp.visibilityFilter,
 })
 
 const mapDispatchToProps = {
   addTodo,
   toggleTodo,
-  setVisibilityFilter,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoApp)
