@@ -1,15 +1,16 @@
 import React, { useRef } from 'react'
 import { connect } from 'react-redux'
-import cl from 'classnames'
+// import cl from 'classnames'
 
 import {
   addTodo,
   toggleTodo,
 } from 'store/reducers/todoApp'
 
-import s from './TodoApp.module.scss'
+// import s from './TodoApp.module.scss'
 
 import FilterLink from './FilterLink'
+import TodoList from './TodoList'
 
 let nextTodoId = 0
 const TodoApp = ({
@@ -35,20 +36,6 @@ const TodoApp = ({
     toggleTodo({ id })
   }
 
-  const getVisibleTodos = (todos, filter) => {
-    switch (filter) {
-      case 'SHOW_ALL': {
-        return todos
-      }
-      case 'SHOW_COMPLETED': {
-        return todos.filter(todo => todo.completed)
-      }
-      default: {
-        return todos.filter(todo => !todo.completed)
-      }
-    }
-  }
-
   return (
     <div>
       <div>
@@ -57,31 +44,11 @@ const TodoApp = ({
 
       </div>
 
-      <ul
-        style={{
-          listStyleType: 'circle',
-          marginLeft: '40%',
-        }}
-      >
-        {getVisibleTodos(todos, filter).map(todo => (
-          <li
-            key={todo.id}
-            style={{
-              width: '200px',
-              textAlign: 'left',
-              cursor: 'pointer',
-            }}
-            onClick={() => handleToggleTodo(todo.id)}
-          >
-            <span className={cl({
-              [s.completed]: todo.completed,
-            })}>
-              {todo.text}
-            </span>
-          </li>
-        ))
-        }
-      </ul>
+      <TodoList
+        todos={todos}
+        filter={filter}
+        handleTodoClick={handleToggleTodo}
+      />
       <p>
         Show:
             {' '}
