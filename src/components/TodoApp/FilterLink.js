@@ -1,23 +1,37 @@
 import React from 'react'
+import { connect } from 'react-redux'
+
+import { setVisibilityFilter } from 'store/reducers/todoApp'
+
+import Link from './Link'
 
 const FilterLink = ({
   filter,
   currentFilter,
-  handleClick,
+  setVisibilityFilter,
   children,
 }) => {
+  const handleSetVisibilityFilter = (e) => {
+    e.preventDefault()
+    setVisibilityFilter({ filter })
+  }
 
-
-  return filter === currentFilter
-    ? (<span>{children}</span>)
-    : (
-      <a
-        href="#"
-        onClick={(e) => handleClick(e, filter)}
-      >
-        {children}
-      </a>
-    )
+  return (
+    <Link
+      active={filter === currentFilter}
+      handleClick={handleSetVisibilityFilter}
+    >
+      {children}
+    </Link>
+  )
 }
 
-export default FilterLink
+const mapStateToProps = (state) => ({
+  currentFilter: state.todoApp.visibilityFilter,
+})
+
+const mapDispatchToProps = {
+  setVisibilityFilter,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(FilterLink)

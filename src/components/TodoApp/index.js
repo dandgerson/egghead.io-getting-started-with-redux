@@ -1,14 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
-// import cl from 'classnames'
 
 import {
   addTodo,
   toggleTodo,
-  setVisibilityFilter,
 } from 'store/reducers/todoApp'
-
-// import s from './TodoApp.module.scss'
 
 import TodoList from './TodoList'
 import AddTodo from './AddTodo'
@@ -20,7 +16,6 @@ const TodoApp = ({
   filter,
   addTodo,
   toggleTodo,
-  setVisibilityFilter,
 }) => {
   const getVisibleTodos = (todos, filter) => {
     switch (filter) {
@@ -47,11 +42,6 @@ const TodoApp = ({
     toggleTodo({ id })
   }
 
-  const handleSetVisibilityFilter = (e, filter) => {
-    e.preventDefault()
-    setVisibilityFilter({ filter })
-  }
-
   return (
     <div>
       <AddTodo handleClick={handleAddTodo} />
@@ -65,10 +55,7 @@ const TodoApp = ({
         handleTodoClick={handleToggleTodo}
       />
 
-      <Footer
-        filter={filter}
-        handleFilterClick={handleSetVisibilityFilter}
-      />
+      <Footer />
     </div>
   )
 }
@@ -81,7 +68,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   addTodo,
   toggleTodo,
-  setVisibilityFilter,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoApp)
