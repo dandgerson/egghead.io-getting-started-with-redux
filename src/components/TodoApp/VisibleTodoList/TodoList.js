@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Todo from 'components/TodoApp/Todo'
+import Todo from './Todo'
 
 const TodoList = ({
   todos,
