@@ -1,16 +1,18 @@
-import React, { useRef } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 // import cl from 'classnames'
 
 import {
   addTodo,
   toggleTodo,
+  setVisibilityFilter,
 } from 'store/reducers/todoApp'
 
 // import s from './TodoApp.module.scss'
 
-import FilterLink from './FilterLink'
 import TodoList from './TodoList'
+import AddTodo from './AddTodo'
+import Footer from './Footer'
 
 let nextTodoId = 0
 const TodoApp = ({
@@ -18,62 +20,55 @@ const TodoApp = ({
   filter,
   addTodo,
   toggleTodo,
+  setVisibilityFilter,
 }) => {
-  const refs = {
-    input: useRef(),
+  const getVisibleTodos = (todos, filter) => {
+    switch (filter) {
+      case 'SHOW_ALL': {
+        return todos
+      }
+      case 'SHOW_COMPLETED': {
+        return todos.filter(todo => todo.completed)
+      }
+      default: {
+        return todos.filter(todo => !todo.completed)
+      }
+    }
   }
 
-  const handleAddTodo = () => {
-    const inputEl = refs.input.current
+  const handleAddTodo = (text) => {
     addTodo({
       id: nextTodoId++,
-      text: inputEl.value,
+      text,
     })
-    inputEl.value = ''
   }
 
   const handleToggleTodo = (id) => {
     toggleTodo({ id })
   }
 
+  const handleSetVisibilityFilter = (e, filter) => {
+    e.preventDefault()
+    setVisibilityFilter({ filter })
+  }
+
   return (
     <div>
-      <div>
-        <input ref={refs.input} type="text" placeholder='what to do' />
-        <input type="button" value='Add Todo' onClick={handleAddTodo} />
-
-      </div>
+      <AddTodo handleClick={handleAddTodo} />
 
       <TodoList
-        todos={todos}
+        todos={getVisibleTodos(
+          todos,
+          filter,
+        )}
         filter={filter}
         handleTodoClick={handleToggleTodo}
       />
-      <p>
-        Show:
-            {' '}
-        <FilterLink
-          filter='SHOW_ALL'
-          currentFilter={filter}
-        >
-          All
-            </FilterLink>
-        {' '}
-        <FilterLink
-          filter='SHOW_ACTIVE'
-          currentFilter={filter}
-        >
-          Active
-            </FilterLink>
-        {' '}
-        <FilterLink
-          filter='SHOW_COMPLETED'
-          currentFilter={filter}
-        >
-          Completed
-            </FilterLink>
-      </p>
 
+      <Footer
+        filter={filter}
+        handleFilterClick={handleSetVisibilityFilter}
+      />
     </div>
   )
 }
@@ -86,6 +81,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   addTodo,
   toggleTodo,
+  setVisibilityFilter,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoApp)
