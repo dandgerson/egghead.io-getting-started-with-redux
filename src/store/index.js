@@ -22,6 +22,6 @@ const listener = () => console.log('The store has updated', store.getState())
 
 
 store.subscribe(listener)
-
+listener()
 
 export default store

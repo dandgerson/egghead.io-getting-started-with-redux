@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
 import { connect } from 'react-redux'
-import classNames from 'classnames'
+import cl from 'classnames'
 
 import {
   addTodo,
@@ -21,8 +21,6 @@ const TodoApp = ({
   const refs = {
     input: useRef(),
   }
-
-  // console.log({ filter })
 
   const handleAddTodo = () => {
     const inputEl = refs.input.current
@@ -54,7 +52,7 @@ const TodoApp = ({
   return (
     <div>
       <div>
-        <input ref={refs.input} type="text" placeholder='input todo' />
+        <input ref={refs.input} type="text" placeholder='what to do' />
         <input type="button" value='Add Todo' onClick={handleAddTodo} />
 
       </div>
@@ -71,14 +69,11 @@ const TodoApp = ({
             style={{
               width: '200px',
               textAlign: 'left',
-              // display: 'flex',
-              // justifyContent: 'flex-start',
               cursor: 'pointer',
-              // margin: '4px auto',
             }}
             onClick={() => handleToggleTodo(todo.id)}
           >
-            <span className={classNames({
+            <span className={cl({
               [s.completed]: todo.completed,
             })}>
               {todo.text}

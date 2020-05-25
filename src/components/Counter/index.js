@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-// import classNames from 'classnames'
+// import cl from 'classnames'
 
 import {
   incrementCounter,

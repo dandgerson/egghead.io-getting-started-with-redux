@@ -1,4 +1,4 @@
-// import { combineReducers } from 'redux'
+import { combineReducers } from 'redux'
 
 const t = {
   ADD_TODO: 'ADD_TODO',
@@ -28,6 +28,8 @@ const todo = (state, action) => {
   }
 }
 
+// Reducer composition with arrays
+
 const todos = (state = [], action) => {
   switch (action.type) {
     case t.ADD_TODO: {
@@ -54,19 +56,23 @@ const visibilityFilter = (state = 'SHOW_ALL', action) => {
   }
 }
 
-const combineReducers = (reducers) => {
-  return (state = {}, action) => Object.keys(reducers)
-    .reduce((acc, current) => ({
-      ...acc,
-      [current]: reducers[current](state[current], action),
-    }), {})
-}
+// Implementation of combineReducers
+//
+// const combineReducers = (reducers) => {
+//   return (state = {}, action) => Object.keys(reducers)
+//     .reduce((acc, current) => ({
+//       ...acc,
+//       [current]: reducers[current](state[current], action),
+//     }), {})
+// }
 
 export const todoApp = combineReducers({
   todos,
   visibilityFilter,
 })
 
+// Reducer composition with objects
+//
 // export const todoApp = (state = {}, action) => {
 //   return {
 //     todos: todos(
@@ -79,6 +85,9 @@ export const todoApp = combineReducers({
 //     )
 //   }
 // }
+
+
+// Action creators
 
 export const addTodo = ({ id, text }) => ({
   type: t.ADD_TODO,

@@ -9,26 +9,22 @@ const FilterLink = ({
   setVisibilityFilter,
   children,
 }) => {
-  if (filter === currentFilter) return <span>{children}</span>
-
-  const handleSetVisibilityFilter = (e) => {
+  const handleSetFilter = (e) => {
     e.preventDefault()
     setVisibilityFilter({ filter })
   }
 
-  return (
-    <a
-      href="#"
-      onClick={handleSetVisibilityFilter}
-    >
-      {children}
-    </a>
-  )
+  return filter === currentFilter
+    ? (<span>{children}</span>)
+    : (
+      <a
+        href="#"
+        onClick={handleSetFilter}
+      >
+        {children}
+      </a>
+    )
 }
-
-// const mapStateToProps = (state) => ({
-//   filter: state.filter,
-// })
 
 const mapDispatchToProps = {
   setVisibilityFilter,
