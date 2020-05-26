@@ -89,9 +89,10 @@ export const todoApp = combineReducers({
 
 // Action creators
 
-export const addTodo = ({ id, text }) => ({
+let nextId = 0
+export const addTodo = ({ text }) => ({
   type: t.ADD_TODO,
-  id,
+  id: nextId++,
   text,
 })
 

@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 
 import { addTodo } from 'store/reducers/todoApp'
 
-let nextTodoId = 0
 const AddTodo = ({
   addTodo,
 }) => {
@@ -14,7 +13,6 @@ const AddTodo = ({
   const handleAddTodo = () => {
     const inputEl = refs.input.current
     addTodo({
-      id: nextTodoId++,
       text: inputEl.value,
     })
     inputEl.value = ''
