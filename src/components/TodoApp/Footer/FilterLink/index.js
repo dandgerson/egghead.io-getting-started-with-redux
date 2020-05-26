@@ -27,7 +27,7 @@ const mapStateToProps = (state, { filter }) => ({
 })
 
 const mapDispatchToProps = (dispatch, { filter }) => ({
-  handleClick: () => dispatch(setVisibilityFilter({ filter })),
+  handleClick() { dispatch(setVisibilityFilter({ filter })) },
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Link)
