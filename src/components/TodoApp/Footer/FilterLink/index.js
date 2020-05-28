@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { setVisibilityFilter } from 'store/reducers/todoApp'
+import { setVisibilityFilter } from 'store/reducers/visibilityFilter'
 
 const Link = ({
   active,
@@ -23,7 +23,7 @@ const Link = ({
 }
 
 const mapStateToProps = (state, { filter }) => ({
-  active: state.todoApp.visibilityFilter === filter,
+  active: state.visibilityFilter === filter,
 })
 
 const mapDispatchToProps = (dispatch, { filter }) => ({

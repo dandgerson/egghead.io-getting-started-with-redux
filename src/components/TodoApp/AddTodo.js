@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import { connect } from 'react-redux'
 
-import { addTodo } from 'store/reducers/todoApp'
+import { addTodo } from 'store/reducers/todos'
 
 const AddTodo = ({
   addTodo,

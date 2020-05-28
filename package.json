@@ -9,12 +9,14 @@
     "classnames": "^2.2.6",
     "deep-freeze": "0.0.1",
     "expect": "^26.0.1",
+    "lodash": "^4.17.15",
     "node-sass": "^4.14.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.0",
     "react-scripts": "3.4.1",
-    "redux": "^4.0.5"
+    "redux": "^4.0.5",
+    "shortid": "^2.2.15"
   },
   "scripts": {
     "start": "react-scripts start",
