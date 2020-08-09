@@ -9,7 +9,7 @@ import App from 'components/App'
 const Root = () => (
   <Provider store={store}>
     <BrowserRouter>
-      <Route exact path='/' render={() => <App />} />
+      <Route path='/:filter?' render={() => <App />} />
     </BrowserRouter>
   </Provider>
 )

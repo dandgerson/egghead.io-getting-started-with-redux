@@ -28,8 +28,8 @@ const TodoList = ({
     </ul>
   )
 
-const mapStateToProps = state => ({
-  todos: getVisibleTodos(state.todos, state.visibilityFilter),
+const mapStateToProps = (state, { filter }) => ({
+  todos: getVisibleTodos(state.todos, filter),
 })
 
 const mapDispatchToProps = {

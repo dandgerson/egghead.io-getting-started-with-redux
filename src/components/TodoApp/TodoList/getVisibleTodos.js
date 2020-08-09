@@ -1,13 +1,13 @@
 export default (todos, filter) => {
   switch (filter) {
-    case 'SHOW_ALL': {
-      return todos
+    case 'active': {
+      return todos.filter(todo => !todo.completed)
     }
-    case 'SHOW_COMPLETED': {
+    case 'completed': {
       return todos.filter(todo => todo.completed)
     }
     default: {
-      return todos.filter(todo => !todo.completed)
+      return todos
     }
   }
 }

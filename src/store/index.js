@@ -8,12 +8,10 @@ import { loadState, saveState } from './localStorage'
 
 import {
   todos,
-  visibilityFilter,
 } from './reducers'
 
 const rootReducer = combineReducers({
   todos,
-  visibilityFilter,
 })
 
 const persistedState = loadState()
