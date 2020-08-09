@@ -57,3 +57,21 @@ export const toggleTodo = ({ id }) => ({
   type: t.TOGGLE_TODO,
   id,
 })
+
+// State selectors
+
+export const getVisibleTodos = (state, filter) => {
+  const { todos } = state
+  switch (filter) {
+    case 'active': {
+      return todos.filter(todo => !todo.completed)
+    }
+    case 'completed': {
+      return todos.filter(todo => todo.completed)
+    }
+    case 'all':
+    default: {
+      return todos
+    }
+  }
+}

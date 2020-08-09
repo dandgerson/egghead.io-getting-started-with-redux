@@ -2,8 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 
-import { toggleTodo } from 'store/reducers/todos'
-import getVisibleTodos from './getVisibleTodos'
+import { toggleTodo, getVisibleTodos } from 'store/reducers/todos'
 
 import Todo from './Todo'
 
@@ -29,7 +28,7 @@ const TodoList = ({
   )
 
 const mapStateToProps = (state, { filter }) => ({
-  todos: getVisibleTodos(state.todos, filter),
+  todos: getVisibleTodos(state, filter),
 })
 
 const mapDispatchToProps = {
