@@ -1,21 +1,16 @@
 import {
   createStore,
   combineReducers,
+  applyMiddleware,
+  compose,
 } from 'redux'
+import logger from 'redux-logger'
 
 import {
   todos,
 } from './reducers'
 
-import { logger } from './middlewares'
-
-const wrapDispatchWithMiddlewares = (store, middlewares) => middlewares
-  .slice()
-  .reverse()
-  .forEach(middleware => store.dispatch = middleware(store)(store.dispatch))
-
 const middlewares = []
-
 if (process.env.NODE_ENV !== 'production') {
   middlewares.push(logger)
 }
@@ -23,11 +18,13 @@ if (process.env.NODE_ENV !== 'production') {
 const rootReducer = combineReducers({
   todos,
 })
-const store = createStore(
-  rootReducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+
+const composeEnhancers = window?.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__?.({}) || compose
+const enhancer = composeEnhancers(
+  applyMiddleware(...middlewares)
 )
 
-wrapDispatchWithMiddlewares(store, middlewares)
-
-export default store
+export default createStore(
+  rootReducer,
+  enhancer,
+)
