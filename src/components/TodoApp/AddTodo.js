@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { addTodo } from 'store/reducers/todos'
 
 const AddTodo = ({
-  addTodo,
+  dispatch,
 }) => {
   const refs = {
     input: useRef(),
@@ -12,9 +12,12 @@ const AddTodo = ({
 
   const handleAddTodo = () => {
     const inputEl = refs.input.current
-    addTodo({
+    if (inputEl.value === '') return
+
+    dispatch(addTodo({
       text: inputEl.value,
-    })
+    }))
+
     inputEl.value = ''
   }
 
@@ -26,8 +29,4 @@ const AddTodo = ({
   )
 }
 
-const mapDispatchToProps = {
-  addTodo,
-}
-
-export default connect(null, mapDispatchToProps)(AddTodo)
+export default connect()(AddTodo)

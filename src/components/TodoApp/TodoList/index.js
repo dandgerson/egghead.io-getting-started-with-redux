@@ -10,10 +10,7 @@ import Todo from './Todo'
 const TodoList = ({
   todos,
   toggleTodo,
-}) => {
-
-
-  return (
+}) => (
     <ul
       style={{
         listStyleType: 'circle',
@@ -30,15 +27,14 @@ const TodoList = ({
       }
     </ul>
   )
-}
+
+const mapStateToProps = state => ({
+  todos: getVisibleTodos(state.todos, state.visibilityFilter),
+})
 
 const mapDispatchToProps = {
   toggleTodo,
 }
 
-const mapStateToProps = (state) => ({
-  todos: getVisibleTodos(state.todos, state.visibilityFilter),
-  currentFilter: state.visibilityFilter,
-})
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoList)

@@ -1,12 +1,12 @@
 import React from 'react';
 
-import './App.scss';
+import s from './App.module.scss';
 
 import TodoApp from 'components/TodoApp'
 
 function App() {
   return (
-    <div className="App">
+    <div className={s.App}>
       <TodoApp />
     </div>
   );

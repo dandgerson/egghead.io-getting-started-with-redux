@@ -3,31 +3,27 @@ import { connect } from 'react-redux'
 
 import { setVisibilityFilter } from 'store/reducers/visibilityFilter'
 
-const Link = ({
-  active,
+const FilterLink = ({
+  isActive,
   handleClick,
   children,
-}) => {
-
-
-  return active
-    ? (<span>{children}</span>)
-    : (
-      <a
-        href="#"
-        onClick={handleClick}
-      >
-        {children}
-      </a>
-    )
-}
+}) => (isActive
+  ? <span>{children}</span>
+  : (
+    <a
+      href="#"
+      onClick={handleClick}
+    >
+      {children}
+    </a>
+  ))
 
 const mapStateToProps = (state, { filter }) => ({
-  active: state.visibilityFilter === filter,
+  isActive: state.visibilityFilter === filter,
 })
 
 const mapDispatchToProps = (dispatch, { filter }) => ({
   handleClick() { dispatch(setVisibilityFilter({ filter })) },
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Link)
+export default connect(mapStateToProps, mapDispatchToProps)(FilterLink)

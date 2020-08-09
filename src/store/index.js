@@ -11,19 +11,19 @@ import {
   visibilityFilter,
 } from './reducers'
 
-const persistedState = loadState()
-
 const rootReducer = combineReducers({
   todos,
   visibilityFilter,
 })
 
+const persistedState = loadState()
+
 const store = createStore(
   rootReducer,
   persistedState,
+  // enhancer,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 )
-const listener = () => console.log('The store has updated', store.getState())
 
 store.subscribe(throttle(() => {
   const { todos } = store.getState()
@@ -32,7 +32,5 @@ store.subscribe(throttle(() => {
     todos,
   })
 }, 1000))
-store.subscribe(listener)
-listener()
 
 export default store
