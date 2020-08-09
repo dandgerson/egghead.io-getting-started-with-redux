@@ -7,35 +7,27 @@ import {
   todos,
 } from './reducers'
 
+import { logger } from './middlewares'
+
+const wrapDispatchWithMiddlewares = (store, middlewares) => middlewares
+  .slice()
+  .reverse()
+  .forEach(middleware => store.dispatch = middleware(store)(store.dispatch))
+
+const middlewares = []
+
+if (process.env.NODE_ENV !== 'production') {
+  middlewares.push(logger)
+}
+
 const rootReducer = combineReducers({
   todos,
 })
-
-
 const store = createStore(
   rootReducer,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 )
 
-const addLoggingToDispatch = (store) => {
-  const rawDispatch = store.dispatch
-
-  if (!console.group) return rawDispatch
-
-  return (action) => {
-    console.group(action.type)
-    console.log('%c prev state', 'color: grey', store.getState())
-    console.log('%c action', 'color: blue', action)
-    const returnValue = rawDispatch(action)
-    console.log('%c next state', 'color: green', store.getState())
-    console.groupEnd(action.type)
-
-    return returnValue
-  }
-}
-
-if (process.env.NODE_ENV !== 'production') {
-  store.dispatch = addLoggingToDispatch(store)
-}
+wrapDispatchWithMiddlewares(store, middlewares)
 
 export default store

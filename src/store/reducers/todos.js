@@ -4,6 +4,7 @@ import { combineReducers } from 'redux'
 const t = {
   ADD_TODO: 'ADD_TODO',
   TOGGLE_TODO: 'TOGGLE_TODO',
+  RECIEVE_TODOS: 'RECIEVE_TODOS',
 }
 
 const todo = (state, action) => {
@@ -12,7 +13,7 @@ const todo = (state, action) => {
       return {
         id: action.id,
         text: action.text,
-        completed: false,
+        isCompleted: false,
       }
     }
     case t.TOGGLE_TODO: {
@@ -20,7 +21,7 @@ const todo = (state, action) => {
         ? state
         : ({
           ...state,
-          completed: !state.completed,
+          isCompleted: !state.isCompleted,
         })
     }
     default:
@@ -39,6 +40,14 @@ const byId = (state = {}, action) => {
           ...state,
           [action.id]: todo(state[action.id], action)
         }
+      }
+    case t.RECIEVE_TODOS:
+      return {
+        ...state,
+        ...(action.todos.reduce((acc, current) => ({
+          ...acc,
+          [current.id]: current,
+        }), {})),
       }
     default:
       return state
@@ -74,6 +83,11 @@ export const addTodo = ({ text }) => ({
 export const toggleTodo = ({ id }) => ({
   type: t.TOGGLE_TODO,
   id,
+})
+
+export const recieveTodos = ({ todos }) => ({
+  type: t.RECIEVE_TODOS,
+  todos,
 })
 
 // State selectors

@@ -1,27 +1,23 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { useParams } from 'react-router-dom'
 
-import { toggleTodo, getVisibleTodos } from 'store/reducers/todos'
+import { toggleTodo, getVisibleTodos, recieveTodos } from 'store/reducers/todos'
 
-import { fetchTodos } from 'api'
+import useFetch from 'hooks/useFetch'
 
 import Todo from './Todo'
 
 const TodoList = ({
   toggleTodo,
+  recieveTodos,
 }) => {
-  const [todos, setTodos] = useState([])
   const { filter } = useParams()
+  const [todos] = useFetch(filter)
 
   useEffect(() => {
-    (async () => {
-      const todos = await fetchTodos(filter)
-      setTodos(todos)
-    })()
-  }, [filter])
-
-  console.log({ todos })
+    recieveTodos({ todos })
+  }, [todos, recieveTodos])
 
   return (
     <ul
@@ -48,6 +44,7 @@ const mapStateToProps = (state, { filter }) => ({
 
 const mapDispatchToProps = {
   toggleTodo,
+  recieveTodos,
 }
 
 
