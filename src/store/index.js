@@ -2,24 +2,23 @@ import {
   createStore,
   combineReducers,
 } from 'redux'
-import throttle from 'lodash/throttle'
-
-import { loadState, saveState } from './localStorage'
 
 import {
   todos,
 } from './reducers'
+import { fetchTodos } from 'api'
+
+fetchTodos('all').then(todos => {
+  console.log({ todos })
+})
 
 const rootReducer = combineReducers({
   todos,
 })
 
-const persistedState = loadState()
 
 const store = createStore(
   rootReducer,
-  persistedState,
-  // enhancer,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 )
 
@@ -40,17 +39,8 @@ const addLoggingToDispatch = (store) => {
   }
 }
 
-
 if (process.env.NODE_ENV !== 'production') {
   store.dispatch = addLoggingToDispatch(store)
 }
-
-store.subscribe(throttle(() => {
-  const { todos } = store.getState()
-
-  saveState({
-    todos,
-  })
-}, 1000))
 
 export default store
