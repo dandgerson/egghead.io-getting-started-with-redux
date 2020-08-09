@@ -6,11 +6,6 @@ import {
 import {
   todos,
 } from './reducers'
-import { fetchTodos } from 'api'
-
-fetchTodos('all').then(todos => {
-  console.log({ todos })
-})
 
 const rootReducer = combineReducers({
   todos,
