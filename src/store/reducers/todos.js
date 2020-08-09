@@ -1,4 +1,5 @@
 import sid from 'shortid'
+import { combineReducers } from 'redux'
 
 const t = {
   ADD_TODO: 'ADD_TODO',
@@ -29,21 +30,38 @@ const todo = (state, action) => {
 
 // Reducer composition with arrays
 
-export const todos = (state = [], action) => {
+const byId = (state = {}, action) => {
+  switch (action.type) {
+    case t.ADD_TODO:
+    case t.TOGGLE_TODO:
+      {
+        return {
+          ...state,
+          [action.id]: todo(state[action.id], action)
+        }
+      }
+    default:
+      return state
+  }
+}
+
+const allIds = (state = [], action) => {
   switch (action.type) {
     case t.ADD_TODO: {
       return [
         ...state,
-        todo(undefined, action)
+        action.id,
       ]
-    }
-    case t.TOGGLE_TODO: {
-      return state.map(t => todo(t, action))
     }
     default:
       return state
   }
 }
+
+export const todos = combineReducers({
+  byId,
+  allIds,
+})
 
 // Action creators
 
@@ -62,16 +80,18 @@ export const toggleTodo = ({ id }) => ({
 
 export const getVisibleTodos = (state, filter) => {
   const { todos } = state
+  const allTodos = todos.allIds.map(id => todos.byId[id])
+
   switch (filter) {
     case 'active': {
-      return todos.filter(todo => !todo.completed)
+      return allTodos.filter(todo => !todo.completed)
     }
     case 'completed': {
-      return todos.filter(todo => todo.completed)
+      return allTodos.filter(todo => todo.completed)
     }
     case 'all':
     default: {
-      return todos
+      return allTodos
     }
   }
 }
