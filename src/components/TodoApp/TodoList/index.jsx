@@ -13,7 +13,7 @@ const TodoList = ({
   recieveTodos,
 }) => {
   const { filter } = useParams()
-  const [todos] = useFetch(filter)
+  const [todos] = useFetch(filter || 'all')
 
   useEffect(() => {
     recieveTodos({ todos })
